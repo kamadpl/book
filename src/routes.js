@@ -22,7 +22,15 @@ module.exports = function (stockRepository) {
                 getCount(req.params.isbn).
                 then(function (result) {
                     if (result) {
-                        res.json({count: result});
+                        //res.json({count: result});
+                        res.format({
+                          'text/html': function(){
+                            res.send('<div>' + result + '</div>');
+                          },
+                          'application/json': function(){
+                            res.send({count: result });
+                          },
+                        });
                     } else {
                         res.status(404).send('No book with isbn ' + req.params.isbn);
                     }
